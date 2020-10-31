@@ -1,0 +1,337 @@
+From 1fea0d89f5b7867262213fc0ac459c4ab861e465 Mon Sep 17 00:00:00 2001
+From: Zoltan HERPAI <wigyori@uid0.hu>
+Date: Mon, 19 Dec 2016 13:57:31 +0100
+Subject: [PATCH] CC: kernel: update to 3.18.45, refresh targets
+
+Compile-tested on ar71xx, imx6, lantiq, mvebu
+Runtime-tested on sunxi.
+
+Signed-off-by: Zoltan HERPAI <wigyori@uid0.hu>
+---
+ include/kernel-version.mk                                           | 4 ++--
+ .../linux/ar71xx/patches-3.18/610-MIPS-ath79-openwrt-machines.patch | 6 +++---
+ .../patches-3.18/707-MIPS-ath79-add-support-for-QCA953x-SoC.patch   | 4 ++--
+ .../patches-3.18/735-MIPS-ath79-add-support-for-QCA956x-SoC.patch   | 4 ++--
+ .../patches-3.18/736-MIPS-ath79-add-MC-MAC1200R-support.patch       | 2 +-
+ .../ar71xx/patches-3.18/737-MIPS-ath79-add-om5p-an-support.patch    | 2 +-
+ .../patches-3.18/738-MIPS-ath79-add-meraki-mr12-mr16-support.patch  | 2 +-
+ .../ar71xx/patches-3.18/800-MIPS-ath79-add-RB922GS-support.patch    | 2 +-
+ .../ar71xx/patches-3.18/815-MIPS-ath79-add-mr1750-support.patch     | 2 +-
+ .../ar71xx/patches-3.18/815-MIPS-ath79-add-om5pac-support.patch     | 2 +-
+ .../ar71xx/patches-3.18/816-MIPS-ath79-add-om5pacv-support.patch    | 2 +-
+ .../patches-3.18/903-MIPS-ath79-ubnt-rocket-m-xw-support.patch      | 2 +-
+ .../linux/ar71xx/patches-3.18/906-MIPS-ath79-add-blackswift.patch   | 2 +-
+ target/linux/ar71xx/patches-3.18/907-MIPS-ath79-add-WPN824N.patch   | 4 ++--
+ .../patches-3.18/907-MIPS-ath79-add-tl-wa901nd-v4-support.patch     | 2 +-
+ .../patches-3.18/908-MIPS-ath79-add-domywifi-dw33d-support.patch    | 6 +++---
+ .../patches-3.18/090-overlayfs-fallback-to-readonly-when-full.patch | 2 +-
+ target/linux/generic/patches-3.18/201-extra_optimization.patch      | 4 ++--
+ .../generic/patches-3.18/550-ubifs-symlink-xattr-support.patch      | 2 +-
+ 19 files changed, 28 insertions(+), 28 deletions(-)
+
+diff --git a/include/kernel-version.mk b/include/kernel-version.mk
+index 861fbbf426..2f6d2790b1 100644
+--- a/include/kernel-version.mk
++++ b/include/kernel-version.mk
+@@ -2,9 +2,9 @@
+ 
+ LINUX_RELEASE?=1
+ 
+-LINUX_VERSION-3.18 = .44
++LINUX_VERSION-3.18 = .45
+ 
+-LINUX_KERNEL_MD5SUM-3.18.44 = 7c52da2f54381a84960118b5bf23381a
++LINUX_KERNEL_MD5SUM-3.18.45 = c527bae0aa1a5d6f3ebe31ad348c5339
+ 
+ ifdef KERNEL_PATCHVER
+   LINUX_VERSION:=$(KERNEL_PATCHVER)$(strip $(LINUX_VERSION-$(KERNEL_PATCHVER)))
+diff --git a/target/linux/ar71xx/patches-3.18/610-MIPS-ath79-openwrt-machines.patch b/target/linux/ar71xx/patches-3.18/610-MIPS-ath79-openwrt-machines.patch
+index ae8d9ffb12..99e96aaf72 100644
+--- a/target/linux/ar71xx/patches-3.18/610-MIPS-ath79-openwrt-machines.patch
++++ b/target/linux/ar71xx/patches-3.18/610-MIPS-ath79-openwrt-machines.patch
+@@ -1374,7 +1374,7 @@
+  
+  config ATH79_MACH_UBNT_XM
+  	bool "Ubiquiti Networks XM/UniFi boards"
+-@@ -83,6 +1144,106 @@ config ATH79_MACH_UBNT_XM
++@@ -83,6 +1155,106 @@ config ATH79_MACH_UBNT_XM
+  	  Say 'Y' here if you want your kernel to support the
+  	  Ubiquiti Networks XM (rev 1.0) board.
+  
+@@ -1481,7 +1481,7 @@
+  endmenu
+  
+  config SOC_AR71XX
+-@@ -124,7 +1285,10 @@ config ATH79_DEV_DSA
++@@ -124,7 +1296,10 @@ config ATH79_DEV_DSA
+  config ATH79_DEV_ETH
+  	def_bool n
+  
+@@ -1493,7 +1493,7 @@
+  	def_bool n
+  
+  config ATH79_DEV_GPIO_BUTTONS
+-@@ -154,6 +1318,11 @@ config ATH79_PCI_ATH9K_FIXUP
++@@ -154,6 +1329,11 @@ config ATH79_PCI_ATH9K_FIXUP
+  	def_bool n
+  
+  config ATH79_ROUTERBOOT
+diff --git a/target/linux/ar71xx/patches-3.18/707-MIPS-ath79-add-support-for-QCA953x-SoC.patch b/target/linux/ar71xx/patches-3.18/707-MIPS-ath79-add-support-for-QCA953x-SoC.patch
+index 813d7f8534..3d264d2d88 100644
+--- a/target/linux/ar71xx/patches-3.18/707-MIPS-ath79-add-support-for-QCA953x-SoC.patch
++++ b/target/linux/ar71xx/patches-3.18/707-MIPS-ath79-add-support-for-QCA953x-SoC.patch
+@@ -22,7 +22,7 @@ meaning of the bits CPUCLK_FROM_CPUPLL and DDRCLK_FROM_DDRPLL is reversed.
+ 
+ --- a/arch/mips/ath79/Kconfig
+ +++ b/arch/mips/ath79/Kconfig
+-@@ -1266,6 +1266,10 @@ config SOC_AR934X
++@@ -1277,6 +1277,10 @@ config SOC_AR934X
+  	select PCI_AR724X if PCI
+  	def_bool n
+  
+@@ -33,7 +33,7 @@ meaning of the bits CPUCLK_FROM_CPUPLL and DDRCLK_FROM_DDRPLL is reversed.
+  config SOC_QCA955X
+  	select HW_HAS_PCI
+  	select PCI_AR724X if PCI
+-@@ -1308,7 +1312,7 @@ config ATH79_DEV_USB
++@@ -1319,7 +1323,7 @@ config ATH79_DEV_USB
+  	def_bool n
+  
+  config ATH79_DEV_WMAC
+diff --git a/target/linux/ar71xx/patches-3.18/735-MIPS-ath79-add-support-for-QCA956x-SoC.patch b/target/linux/ar71xx/patches-3.18/735-MIPS-ath79-add-support-for-QCA956x-SoC.patch
+index 0da81426ca..abb8d03b5b 100644
+--- a/target/linux/ar71xx/patches-3.18/735-MIPS-ath79-add-support-for-QCA956x-SoC.patch
++++ b/target/linux/ar71xx/patches-3.18/735-MIPS-ath79-add-support-for-QCA956x-SoC.patch
+@@ -378,7 +378,7 @@
+  }
+ --- a/arch/mips/ath79/Kconfig
+ +++ b/arch/mips/ath79/Kconfig
+-@@ -1286,6 +1286,12 @@ config SOC_QCA955X
++@@ -1297,6 +1297,12 @@ config SOC_QCA955X
+  	select PCI_AR724X if PCI
+  	def_bool n
+  
+@@ -391,7 +391,7 @@
+  config ATH79_DEV_M25P80
+  	select ATH79_DEV_SPI
+  	def_bool n
+-@@ -1323,7 +1329,7 @@ config ATH79_DEV_USB
++@@ -1334,7 +1340,7 @@ config ATH79_DEV_USB
+  	def_bool n
+  
+  config ATH79_DEV_WMAC
+diff --git a/target/linux/ar71xx/patches-3.18/736-MIPS-ath79-add-MC-MAC1200R-support.patch b/target/linux/ar71xx/patches-3.18/736-MIPS-ath79-add-MC-MAC1200R-support.patch
+index b4d3ec100c..d4f4e6a1ef 100644
+--- a/target/linux/ar71xx/patches-3.18/736-MIPS-ath79-add-MC-MAC1200R-support.patch
++++ b/target/linux/ar71xx/patches-3.18/736-MIPS-ath79-add-MC-MAC1200R-support.patch
+@@ -1,6 +1,6 @@
+ --- a/arch/mips/ath79/Kconfig
+ +++ b/arch/mips/ath79/Kconfig
+-@@ -599,6 +599,16 @@ config ATH79_MACH_R6100
++@@ -610,6 +610,16 @@ config ATH79_MACH_R6100
+  	select ATH79_DEV_USB
+  	select ATH79_DEV_WMAC
+  
+diff --git a/target/linux/ar71xx/patches-3.18/737-MIPS-ath79-add-om5p-an-support.patch b/target/linux/ar71xx/patches-3.18/737-MIPS-ath79-add-om5p-an-support.patch
+index 137a09ab50..f8631078ef 100644
+--- a/target/linux/ar71xx/patches-3.18/737-MIPS-ath79-add-om5p-an-support.patch
++++ b/target/linux/ar71xx/patches-3.18/737-MIPS-ath79-add-om5p-an-support.patch
+@@ -10,7 +10,7 @@
+  	ATH79_MACH_PB42,		/* Atheros PB42 */
+ --- a/arch/mips/ath79/Kconfig
+ +++ b/arch/mips/ath79/Kconfig
+-@@ -752,6 +752,7 @@ config ATH79_MACH_OM2P
++@@ -763,6 +763,7 @@ config ATH79_MACH_OM2P
+  config ATH79_MACH_OM5P
+  	bool "OpenMesh OM5P board support"
+  	select SOC_AR934X
+diff --git a/target/linux/ar71xx/patches-3.18/738-MIPS-ath79-add-meraki-mr12-mr16-support.patch b/target/linux/ar71xx/patches-3.18/738-MIPS-ath79-add-meraki-mr12-mr16-support.patch
+index 84ae4003af..90f68e4007 100644
+--- a/target/linux/ar71xx/patches-3.18/738-MIPS-ath79-add-meraki-mr12-mr16-support.patch
++++ b/target/linux/ar71xx/patches-3.18/738-MIPS-ath79-add-meraki-mr12-mr16-support.patch
+@@ -1,6 +1,6 @@
+ --- a/arch/mips/ath79/Kconfig
+ +++ b/arch/mips/ath79/Kconfig
+-@@ -769,6 +769,26 @@ config ATH79_MACH_ONION_OMEGA
++@@ -780,6 +780,26 @@ config ATH79_MACH_ONION_OMEGA
+  	select ATH79_DEV_USB
+  	select ATH79_DEV_WMAC
+  
+diff --git a/target/linux/ar71xx/patches-3.18/800-MIPS-ath79-add-RB922GS-support.patch b/target/linux/ar71xx/patches-3.18/800-MIPS-ath79-add-RB922GS-support.patch
+index a387bdd33b..6ab94fc217 100644
+--- a/target/linux/ar71xx/patches-3.18/800-MIPS-ath79-add-RB922GS-support.patch
++++ b/target/linux/ar71xx/patches-3.18/800-MIPS-ath79-add-RB922GS-support.patch
+@@ -1,6 +1,6 @@
+ --- a/arch/mips/ath79/Kconfig
+ +++ b/arch/mips/ath79/Kconfig
+-@@ -644,6 +644,16 @@ config ATH79_MACH_RB91X
++@@ -655,6 +655,16 @@ config ATH79_MACH_RB91X
+  	select ATH79_DEV_USB
+  	select ATH79_ROUTERBOOT
+  
+diff --git a/target/linux/ar71xx/patches-3.18/815-MIPS-ath79-add-mr1750-support.patch b/target/linux/ar71xx/patches-3.18/815-MIPS-ath79-add-mr1750-support.patch
+index d34712b71e..878d805251 100644
+--- a/target/linux/ar71xx/patches-3.18/815-MIPS-ath79-add-mr1750-support.patch
++++ b/target/linux/ar71xx/patches-3.18/815-MIPS-ath79-add-mr1750-support.patch
+@@ -1,6 +1,6 @@
+ --- a/arch/mips/ath79/Kconfig
+ +++ b/arch/mips/ath79/Kconfig
+-@@ -858,6 +858,16 @@ config ATH79_MACH_CAP4200AG
++@@ -869,6 +869,16 @@ config ATH79_MACH_CAP4200AG
+  	select ATH79_DEV_M25P80
+  	select ATH79_DEV_WMAC
+  
+diff --git a/target/linux/ar71xx/patches-3.18/815-MIPS-ath79-add-om5pac-support.patch b/target/linux/ar71xx/patches-3.18/815-MIPS-ath79-add-om5pac-support.patch
+index 4eea429e55..5d6602533f 100644
+--- a/target/linux/ar71xx/patches-3.18/815-MIPS-ath79-add-om5pac-support.patch
++++ b/target/linux/ar71xx/patches-3.18/815-MIPS-ath79-add-om5pac-support.patch
+@@ -1,6 +1,6 @@
+ --- a/arch/mips/ath79/Kconfig
+ +++ b/arch/mips/ath79/Kconfig
+-@@ -779,6 +779,15 @@ config ATH79_MACH_OM5P
++@@ -790,6 +790,15 @@ config ATH79_MACH_OM5P
+  	select ATH79_DEV_M25P80
+  	select ATH79_DEV_WMAC
+  
+diff --git a/target/linux/ar71xx/patches-3.18/816-MIPS-ath79-add-om5pacv-support.patch b/target/linux/ar71xx/patches-3.18/816-MIPS-ath79-add-om5pacv-support.patch
+index aca37c9657..05108c7e30 100644
+--- a/target/linux/ar71xx/patches-3.18/816-MIPS-ath79-add-om5pacv-support.patch
++++ b/target/linux/ar71xx/patches-3.18/816-MIPS-ath79-add-om5pacv-support.patch
+@@ -1,6 +1,6 @@
+ --- a/arch/mips/ath79/Kconfig
+ +++ b/arch/mips/ath79/Kconfig
+-@@ -788,6 +788,16 @@ config ATH79_MACH_OM5P_AC
++@@ -799,6 +799,16 @@ config ATH79_MACH_OM5P_AC
+  	select ATH79_DEV_M25P80
+  	select ATH79_DEV_WMAC
+  
+diff --git a/target/linux/ar71xx/patches-3.18/903-MIPS-ath79-ubnt-rocket-m-xw-support.patch b/target/linux/ar71xx/patches-3.18/903-MIPS-ath79-ubnt-rocket-m-xw-support.patch
+index bab5cc75b1..b55ae90ea7 100644
+--- a/target/linux/ar71xx/patches-3.18/903-MIPS-ath79-ubnt-rocket-m-xw-support.patch
++++ b/target/linux/ar71xx/patches-3.18/903-MIPS-ath79-ubnt-rocket-m-xw-support.patch
+@@ -1,6 +1,6 @@
+ --- a/arch/mips/ath79/machtypes.h
+ +++ b/arch/mips/ath79/machtypes.h
+-@@ -184,6 +184,7 @@ enum ath79_mach_type {
++@@ -185,6 +185,7 @@ enum ath79_mach_type {
+  	ATH79_MACH_UBNT_NANO_M, 	/* Ubiquiti NanoStation M */
+  	ATH79_MACH_UBNT_NANO_M_XW, 	/* Ubiquiti NanoStation M XW */
+  	ATH79_MACH_UBNT_ROCKET_M,	/* Ubiquiti Rocket M */
+diff --git a/target/linux/ar71xx/patches-3.18/906-MIPS-ath79-add-blackswift.patch b/target/linux/ar71xx/patches-3.18/906-MIPS-ath79-add-blackswift.patch
+index 5cb5db1b74..ac6b7bac65 100644
+--- a/target/linux/ar71xx/patches-3.18/906-MIPS-ath79-add-blackswift.patch
++++ b/target/linux/ar71xx/patches-3.18/906-MIPS-ath79-add-blackswift.patch
+@@ -1,6 +1,6 @@
+ --- a/arch/mips/ath79/Kconfig
+ +++ b/arch/mips/ath79/Kconfig
+-@@ -925,6 +925,16 @@ config ATH79_MACH_EAP7660D
++@@ -936,6 +936,16 @@ config ATH79_MACH_EAP7660D
+  	select ATH79_DEV_LEDS_GPIO
+  	select ATH79_DEV_M25P80
+  
+diff --git a/target/linux/ar71xx/patches-3.18/907-MIPS-ath79-add-WPN824N.patch b/target/linux/ar71xx/patches-3.18/907-MIPS-ath79-add-WPN824N.patch
+index 8921fb7036..a8135ee6af 100644
+--- a/target/linux/ar71xx/patches-3.18/907-MIPS-ath79-add-WPN824N.patch
++++ b/target/linux/ar71xx/patches-3.18/907-MIPS-ath79-add-WPN824N.patch
+@@ -1,6 +1,6 @@
+ --- a/arch/mips/ath79/Kconfig
+ +++ b/arch/mips/ath79/Kconfig
+-@@ -750,7 +750,7 @@ config ATH79_MACH_WNR2000
++@@ -761,7 +761,7 @@ config ATH79_MACH_WNR2000
+  	select ATH79_DEV_WMAC
+  
+  config ATH79_MACH_WNR2000_V3
+@@ -11,7 +11,7 @@
+  	select ATH79_DEV_ETH
+ --- a/arch/mips/ath79/machtypes.h
+ +++ b/arch/mips/ath79/machtypes.h
+-@@ -211,6 +211,7 @@ enum ath79_mach_type {
++@@ -212,6 +212,7 @@ enum ath79_mach_type {
+  	ATH79_MACH_WNR2200,		/* NETGEAR WNR2200 */
+  	ATH79_MACH_WNR612_V2,		/* NETGEAR WNR612 v2 */
+  	ATH79_MACH_WNR1000_V2,		/* NETGEAR WNR1000 v2 */
+diff --git a/target/linux/ar71xx/patches-3.18/907-MIPS-ath79-add-tl-wa901nd-v4-support.patch b/target/linux/ar71xx/patches-3.18/907-MIPS-ath79-add-tl-wa901nd-v4-support.patch
+index f84bce646d..16f65e1780 100644
+--- a/target/linux/ar71xx/patches-3.18/907-MIPS-ath79-add-tl-wa901nd-v4-support.patch
++++ b/target/linux/ar71xx/patches-3.18/907-MIPS-ath79-add-tl-wa901nd-v4-support.patch
+@@ -10,7 +10,7 @@
+  	ATH79_MACH_TL_WDR4900_V2,	/* TP-LINK TL-WDR4900 v2 */
+ --- a/arch/mips/ath79/Kconfig
+ +++ b/arch/mips/ath79/Kconfig
+-@@ -1052,6 +1052,15 @@ config ATH79_MACH_TL_WA901ND_V2
++@@ -1063,6 +1063,15 @@ config ATH79_MACH_TL_WA901ND_V2
+  	select ATH79_DEV_M25P80
+  	select ATH79_DEV_WMAC
+  
+diff --git a/target/linux/ar71xx/patches-3.18/908-MIPS-ath79-add-domywifi-dw33d-support.patch b/target/linux/ar71xx/patches-3.18/908-MIPS-ath79-add-domywifi-dw33d-support.patch
+index ee575d54f9..5a7cefb88e 100644
+--- a/target/linux/ar71xx/patches-3.18/908-MIPS-ath79-add-domywifi-dw33d-support.patch
++++ b/target/linux/ar71xx/patches-3.18/908-MIPS-ath79-add-domywifi-dw33d-support.patch
+@@ -1,6 +1,6 @@
+ --- a/arch/mips/ath79/Kconfig
+ +++ b/arch/mips/ath79/Kconfig
+-@@ -480,6 +480,22 @@
++@@ -480,6 +480,22 @@ config ATH79_MACH_DLAN_PRO_1200_AC
+  	select ATH79_DEV_NFC
+  	select ATH79_DEV_USB
+  
+@@ -25,7 +25,7 @@
+  	select SOC_AR933X
+ --- a/arch/mips/ath79/Makefile
+ +++ b/arch/mips/ath79/Makefile
+-@@ -69,6 +69,7 @@
++@@ -69,6 +69,7 @@ obj-$(CONFIG_ATH79_MACH_DIR_615_C1)	+= m
+  obj-$(CONFIG_ATH79_MACH_DIR_615_I1)	+= mach-dir-615-i1.o
+  obj-$(CONFIG_ATH79_MACH_DIR_825_B1)	+= mach-dir-825-b1.o
+  obj-$(CONFIG_ATH79_MACH_DIR_825_C1)	+= mach-dir-825-c1.o
+@@ -35,7 +35,7 @@
+  obj-$(CONFIG_ATH79_MACH_EW_DORIN)	+= mach-ew-dorin.o
+ --- a/arch/mips/ath79/machtypes.h
+ +++ b/arch/mips/ath79/machtypes.h
+-@@ -57,6 +57,7 @@
++@@ -57,6 +57,7 @@ enum ath79_mach_type {
+  	ATH79_MACH_DIR_835_A1,		/* D-Link DIR-835 rev. A1 */
+  	ATH79_MACH_DLAN_PRO_500_WP,	/* devolo dLAN pro 500 Wireless+ */
+  	ATH79_MACH_DLAN_PRO_1200_AC,	/* devolo dLAN pro 1200+ WiFi ac*/
+diff --git a/target/linux/generic/patches-3.18/090-overlayfs-fallback-to-readonly-when-full.patch b/target/linux/generic/patches-3.18/090-overlayfs-fallback-to-readonly-when-full.patch
+index c75af99c60..6c26a47c5f 100644
+--- a/target/linux/generic/patches-3.18/090-overlayfs-fallback-to-readonly-when-full.patch
++++ b/target/linux/generic/patches-3.18/090-overlayfs-fallback-to-readonly-when-full.patch
+@@ -44,7 +44,7 @@ Miklos
+ 
+ --- a/fs/overlayfs/copy_up.c
+ +++ b/fs/overlayfs/copy_up.c
+-@@ -313,6 +313,9 @@ int ovl_copy_up_one(struct dentry *paren
++@@ -315,6 +315,9 @@ int ovl_copy_up_one(struct dentry *paren
+  	struct cred *override_cred;
+  	char *link = NULL;
+  
+diff --git a/target/linux/generic/patches-3.18/201-extra_optimization.patch b/target/linux/generic/patches-3.18/201-extra_optimization.patch
+index 7ec93a47f4..2e2ed66161 100644
+--- a/target/linux/generic/patches-3.18/201-extra_optimization.patch
++++ b/target/linux/generic/patches-3.18/201-extra_optimization.patch
+@@ -1,7 +1,7 @@
+ --- a/Makefile
+ +++ b/Makefile
+-@@ -612,9 +612,9 @@ include $(srctree)/arch/$(SRCARCH)/Makef
+- KBUILD_CFLAGS	+= $(call cc-option,-fno-delete-null-pointer-checks,)
++@@ -614,9 +614,9 @@ KBUILD_CFLAGS	+= $(call cc-option,-fno-P
++ KBUILD_AFLAGS	+= $(call cc-option,-fno-PIE)
+  
+  ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
+ -KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
+diff --git a/target/linux/generic/patches-3.18/550-ubifs-symlink-xattr-support.patch b/target/linux/generic/patches-3.18/550-ubifs-symlink-xattr-support.patch
+index 42ae9cb84a..6e08ca302e 100644
+--- a/target/linux/generic/patches-3.18/550-ubifs-symlink-xattr-support.patch
++++ b/target/linux/generic/patches-3.18/550-ubifs-symlink-xattr-support.patch
+@@ -39,7 +39,7 @@
+  
+ --- a/fs/ubifs/xattr.c
+ +++ b/fs/ubifs/xattr.c
+-@@ -209,12 +209,12 @@ static int change_xattr(struct ubifs_inf
++@@ -210,12 +210,12 @@ static int change_xattr(struct ubifs_inf
+  		goto out_free;
+  	}
+  	inode->i_size = ui->ui_size = size;
+-- 
+2.11.0
